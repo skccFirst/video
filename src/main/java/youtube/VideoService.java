@@ -22,49 +22,33 @@ public class VideoService {
     private Date uploadTime;
     private Long clientId;
     private Long channelId;
+    private int viewCount=0;
 
     @PrePersist
     public void onPrePersist(){
-        UploadedVideo uploadedVideo = new UploadedVideo();
-        BeanUtils.copyProperties(this, uploadedVideo);
-        uploadedVideo.publishAfterCommit();
-
-
-        EditedVideo editedVideo = new EditedVideo();
-        BeanUtils.copyProperties(this, editedVideo);
-        editedVideo.publishAfterCommit();
-
-
-        DeletedVideo deletedVideo = new DeletedVideo();
-        BeanUtils.copyProperties(this, deletedVideo);
-        deletedVideo.publishAfterCommit();
-
 
     }
 
+    @PreUpdate
+    public void onPostEdited(){
+        EditedVideo editedVideo = new EditedVideo();
+        BeanUtils.copyProperties(this, editedVideo);
+        editedVideo.publishAfterCommit();
+    }
+
     @PostPersist
-    public void eventPublish(){
+    public void onPostUploaded(){
+        UploadedVideo uploadedVideo = new UploadedVideo();
+        BeanUtils.copyProperties(this, uploadedVideo);
+        uploadedVideo.publishAfterCommit();
+    }
+
+
+    @PreRemove
+    public void onPreRemove(){
         DeletedVideo deletedVideo = new DeletedVideo();
-        deletedVideo.setVideoId(this.getVideoId());
-        deletedVideo.setUploadTime(this.getUploadTime());
-        deletedVideo.setClientId(this.getClientId());
-        deletedVideo.setChannelId(this.getChannelId());
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = null;
-
-        try {
-            json = objectMapper.writeValueAsString(deletedVideo);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        Processor processor = Application.applicationContext.getBean(Processor.class);
-        MessageChannel outputChannel = processor.output();
-
-        outputChannel.send(MessageBuilder
-                .withPayload(json)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .build());
+        BeanUtils.copyProperties(this, deletedVideo);
+        deletedVideo.publishAfterCommit();
     }
 
     public Long getVideoId() {
@@ -98,4 +82,13 @@ public class VideoService {
     public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
+
+    public int getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
 }
