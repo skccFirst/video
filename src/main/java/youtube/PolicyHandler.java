@@ -32,14 +32,15 @@ public class PolicyHandler{
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeletedPolicy_DeleteVideo(@Payload DeletedPolicy deletedPolicy){
 
-        if(deletedPolicy.getDeleteVideoId()!=null)
-        {
-            videoServiceRepository.deleteById(deletedPolicy.getDeleteVideoId());
-            System.out.println("##### 동영상이 삭제되었습니다. : " + deletedPolicy.getDeleteVideoId());
+
+        if(deletedPolicy.isMe()){
+            if(deletedPolicy.getDeleteVideoId()!=null)
+            {
+                //videoServiceRepository.deleteById(deletedPolicy.getDeleteVideoId());
+                System.out.println("##### 동영상이 삭제되었습니다. : " + deletedPolicy.getDeleteVideoId());
+            }
+            System.out.println("##### listener DeleteVideo : " + deletedPolicy.toJson());
         }
-//        if(deletedChannel.isMe()){
-//            System.out.println("##### listener DeleteVideo : " + deletedChannel.toJson());
-//        }
     }
 
 
