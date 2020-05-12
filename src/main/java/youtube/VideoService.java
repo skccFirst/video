@@ -1,10 +1,16 @@
 package youtube;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.util.MimeTypeUtils;
 
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="VideoService_table")
@@ -36,6 +42,30 @@ public class VideoService {
 
     }
 
+    @PostPersist
+    public void eventPublish(){
+        DeletedVideo deletedVideo = new DeletedVideo();
+        deletedVideo.setVideoId(this.getVideoId());
+        deletedVideo.setUploadTime(this.getUploadTime());
+        deletedVideo.setClientId(this.getClientId());
+        deletedVideo.setChannelId(this.getChannelId());
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+
+        try {
+            json = objectMapper.writeValueAsString(deletedVideo);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Processor processor = Application.applicationContext.getBean(Processor.class);
+        MessageChannel outputChannel = processor.output();
+
+        outputChannel.send(MessageBuilder
+                .withPayload(json)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                .build());
+    }
 
     public String getVideoId() {
         return videoId;
