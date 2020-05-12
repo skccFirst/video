@@ -4,9 +4,9 @@ package youtube;
 public class DeletedChannel extends AbstractEvent {
 
     private String channelName;
-    private String channelId;
-    private String clientID;
-    private String videoId;
+    private Long channelId;
+    private Long clientID;
+    private Long videoId;
 
     public String getChannelName() {
         return channelName;
@@ -15,25 +15,28 @@ public class DeletedChannel extends AbstractEvent {
     public void setChannelName(String channelName) {
         this.channelName = channelName;
     }
-    public String getChannelId() {
+
+    public Long getChannelId() {
         return channelId;
     }
 
-    public void setChannelId(String channelId) {
+    public void setChannelId(Long channelId) {
         this.channelId = channelId;
     }
-    public String getClientId() {
+
+    public Long getClientID() {
         return clientID;
     }
 
-    public void setClientId(String clientID) {
+    public void setClientID(Long clientID) {
         this.clientID = clientID;
     }
-    public String getVideoId() {
+
+    public Long getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(String videoId) {
+    public void setVideoId(Long videoId) {
         this.videoId = videoId;
     }
 }
