@@ -34,8 +34,8 @@ public class PolicyHandler{
 
         if(deletedPolicy.getDeleteVideoId()!=null)
         {
+            videoServiceRepository.deleteById(deletedPolicy.getDeleteVideoId());
             System.out.println("##### 동영상이 삭제되었습니다. : " + deletedPolicy.getDeleteVideoId());
-
         }
 //        if(deletedChannel.isMe()){
 //            System.out.println("##### listener DeleteVideo : " + deletedChannel.toJson());
