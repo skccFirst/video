@@ -1,5 +1,7 @@
 package youtube;
 
+import java.util.Date;
+
 public class UploadedVideo extends AbstractEvent {
 
     private String videoId;

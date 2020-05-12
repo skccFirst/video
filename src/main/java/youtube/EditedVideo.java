@@ -1,5 +1,7 @@
 package youtube;
 
+import java.util.Date;
+
 public class EditedVideo extends AbstractEvent {
 
     private String videoId;
