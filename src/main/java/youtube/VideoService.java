@@ -34,6 +34,8 @@ public class VideoService {
         EditedVideo editedVideo = new EditedVideo();
         BeanUtils.copyProperties(this, editedVideo);
         editedVideo.publishAfterCommit();
+
+        System.out.println(("-------------------------------- onPostEdited"));
     }
 
     @PostPersist
@@ -41,6 +43,8 @@ public class VideoService {
         UploadedVideo uploadedVideo = new UploadedVideo();
         BeanUtils.copyProperties(this, uploadedVideo);
         uploadedVideo.publishAfterCommit();
+
+        System.out.println(("-------------------------------- onPostUploaded"));
     }
 
 
@@ -49,6 +53,8 @@ public class VideoService {
         DeletedVideo deletedVideo = new DeletedVideo();
         BeanUtils.copyProperties(this, deletedVideo);
         deletedVideo.publishAfterCommit();
+
+        System.out.println(("-------------------------------- onPreRemove"));
     }
 
     public Long getVideoId() {
