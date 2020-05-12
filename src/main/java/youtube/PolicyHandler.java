@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PolicyHandler{
+
+    @Autowired
+    VideoServiceRepository videoServiceRepository;
     
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeletedChannel_DeleteVideo(@Payload DeletedChannel deletedChannel){
@@ -25,5 +28,18 @@ public class PolicyHandler{
             System.out.println("##### listener DeleteVideo : " + checkedPolicy.toJson());
         }
     }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverDeletedPolicy_DeleteVideo(@Payload DeletedPolicy deletedPolicy){
+
+        if(deletedPolicy.getDeleteVideoId()!=null)
+        {
+            System.out.println("##### 동영상이 삭제되었습니다. : " + deletedPolicy.getDeleteVideoId());
+        }
+//        if(deletedChannel.isMe()){
+//            System.out.println("##### listener DeleteVideo : " + deletedChannel.toJson());
+//        }
+    }
+
 
 }
