@@ -24,18 +24,13 @@ public class VideoService {
     private Long channelId;
     private int viewCount=0;
 
-    @PrePersist
-    public void onPrePersist(){
-
-    }
-
     @PreUpdate
     public void onPostEdited(){
         EditedVideo editedVideo = new EditedVideo();
         BeanUtils.copyProperties(this, editedVideo);
         editedVideo.publishAfterCommit();
 
-        System.out.println(("-------------------------------- onPostEdited"));
+        System.out.println(("**********동영상이 수정되었습니다**********"));
     }
 
     @PostPersist
