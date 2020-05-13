@@ -39,9 +39,8 @@ public class VideoService {
         BeanUtils.copyProperties(this, uploadedVideo);
         uploadedVideo.publishAfterCommit();
 
-        System.out.println(("-------------------------------- onPostUploaded"));
+        System.out.println(("**********동영상이 업로드되었습니다**********"));
     }
-
 
     @PreRemove
     public void onPreRemove(){
@@ -49,7 +48,7 @@ public class VideoService {
         BeanUtils.copyProperties(this, deletedVideo);
         deletedVideo.publishAfterCommit();
 
-        System.out.println(("-------------------------------- onPreRemove"));
+        System.out.println(("**********동영상이 삭제되었습니다**********"));
     }
 
     public Long getVideoId() {
