@@ -13,14 +13,7 @@ public class PolicyHandler{
 
     @Autowired
     VideoServiceRepository videoServiceRepository;
-    
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverDeletedChannel_DeleteVideo(@Payload DeletedChannel deletedChannel){
 
-        if(deletedChannel.isMe()){
-            System.out.println("##### listener DeleteVideo : " + deletedChannel.toJson());
-        }
-    }
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverCheckedPolicy_DeleteVideo(@Payload CheckedPolicy checkedPolicy){
 
