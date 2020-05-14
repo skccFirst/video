@@ -8,6 +8,8 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+
 @Service
 public class PolicyHandler{
 
@@ -36,5 +38,33 @@ public class PolicyHandler{
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverAdRegistered_EditedVideo(@Payload AdRegistered adRegistered) {
+        System.out.println("##### wheneverAdRegistered_EditedVideo 들어옴");
+        if(videoServiceRepository.count() == 0){
+            System.out.println("##### 등록된 동영상이 없어 광고를 맵핑이 불가능합니다.");
+        }
+        if (adRegistered.isMe()) {
+            if (adRegistered.getAdId() != null) {
+                boolean isMapping = false; // 광고 맵핑 여부
+                Iterable<VideoService> vsList = videoServiceRepository.findAll();
+                Iterator it = vsList.iterator();
+                while (it.hasNext()) {
+                    if (isMapping)
+                        break;
 
+                    VideoService vs = (VideoService) it.next();
+                    System.out.println("##### vs.getAdId()| " + vs.getAdId());
+                    if ("".equals(vs.getAdId()) || null == vs.getAdId()) {
+                        vs.setAdId(adRegistered.getAdId());
+                        videoServiceRepository.save(vs);
+                        isMapping = true;
+                        System.out.println("##### 동영상에 광고가 등록되었습니다. 동영상id" +vs.getAdId() + ",  광고id: "+ adRegistered.getAdId());
+                    }
+                }
+                System.out.println("##### listener AdRegistered : " + adRegistered.toJson());
+
+            }
+        }
+    }
 }
