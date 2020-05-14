@@ -36,5 +36,14 @@ public class PolicyHandler{
         }
     }
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverCheckedMembership_DeleteAd(@Payload CheckedMembership checkedMembership){
+
+        if(checkedMembership.isMe()){
+            System.out.println("#### 멤버십 확인되었습니다. 광고없이 동영상 시청이 가능합니다." + checkedMembership.toJson());
+            System.out.println("##### listener DeleteVideo : " + checkedMembership.toJson());
+        }
+    }
+
 
 }

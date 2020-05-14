@@ -26,6 +26,7 @@ public class VideoService {
     private Long channelId;
     private int viewCount=0;
     private Long captionId;
+    private Long membershipId;
 
     // 강령현 추가
     private String adList =""; // 등록된 광고 리스트 , 로 광고id 이어붙이기
@@ -46,7 +47,15 @@ public class VideoService {
         uploadedVideo.publishAfterCommit();
 
         System.out.println(("**********동영상이 업로드되었습니다**********"));
+
+        StartedVideo startedVideo = new StartedVideo();
+        BeanUtils.copyProperties(this, startedVideo);
+        startedVideo.publishAfterCommit();
+
+        System.out.println(("**********동영상이 시작되었습니다.**********"));
+
     }
+
 
     @PreRemove
     public void onPreRemove(){
@@ -140,5 +149,13 @@ public class VideoService {
 
     public void setCaptionId(Long captionId) {
         this.captionId = captionId;
+    }
+
+    public Long getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(Long membershipId) {
+        this.membershipId = membershipId;
     }
 }
