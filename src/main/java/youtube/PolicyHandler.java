@@ -46,4 +46,19 @@ public class PolicyHandler{
     }
 
 
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverCreatedCaption_EditedVideo(@Payload CreatedCaption createdCaption){
+        if(createdCaption.isMe()){
+            System.out.println(("**********동영상에 자막이 추가되었습니다**********"));
+
+        }
+    }
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverEditedCaption_EditedVideo(@Payload EditedCaption editedCaption){
+        if(editedCaption.isMe()){
+            System.out.println(("**********동영상에 자막이 수정되었습니다**********"));
+
+        }
+    }
 }
