@@ -9,6 +9,7 @@ public class UploadedVideo extends AbstractEvent {
     private Long clientId;
     private Long channelId;
     private int viewCount=0;
+    private Long captionId;
 
     public UploadedVideo(){
         super();
@@ -52,5 +53,13 @@ public class UploadedVideo extends AbstractEvent {
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public Long getCaptionId() {
+        return captionId;
+    }
+
+    public void setCaptionId(Long captionId) {
+        this.captionId = captionId;
     }
 }

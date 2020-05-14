@@ -25,6 +25,7 @@ public class VideoService {
     private Long clientId;
     private Long channelId;
     private int viewCount=0;
+    private Long captionId;
 
     // 강령현 추가
     private String adList =""; // 등록된 광고 리스트 , 로 광고id 이어붙이기
@@ -131,5 +132,13 @@ public class VideoService {
         }
 
         this.adList = sb.toString();
+    }
+
+    public Long getCaptionId() {
+        return captionId;
+    }
+
+    public void setCaptionId(Long captionId) {
+        this.captionId = captionId;
     }
 }
