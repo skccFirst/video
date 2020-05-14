@@ -8,6 +8,7 @@ public class DeletedVideo extends AbstractEvent {
     private Date uploadTime;
     private Long clientId;
     private Long channelId;
+    private Long captionId;
 
     public DeletedVideo(){
         super();
@@ -43,5 +44,13 @@ public class DeletedVideo extends AbstractEvent {
 
     public void setChannelId(Long channelId) {
         this.channelId = channelId;
+    }
+
+    public Long getCaptionId() {
+        return captionId;
+    }
+
+    public void setCaptionId(Long captionId) {
+        this.captionId = captionId;
     }
 }

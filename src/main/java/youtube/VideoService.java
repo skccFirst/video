@@ -25,6 +25,7 @@ public class VideoService {
     private Long clientId;
     private Long channelId;
     private int viewCount=0;
+    private Long captionId;
 
     // 강령현 추가
     private Long adId; // 광고 ID
@@ -104,4 +105,39 @@ public class VideoService {
         this.adId = adId;
     }
 
+    public void addAdList(String adId) {
+        if("".equals(adId) || adId.isEmpty()){
+            this.adList = adId;
+        }else{
+            StringBuilder sb = new StringBuilder(this.adList);
+            sb.append(",");
+            sb.append(adId);
+            this.adList = sb.toString();
+        }
+    }
+
+    public void minusAdList(String adId) {
+        StringTokenizer st = new StringTokenizer(this.adList, ",");
+        StringBuilder sb = new StringBuilder();
+        int countTokens = st.countTokens();
+        for (int i = 0; i < countTokens; i++) {
+            String token = st.nextToken();
+            if(!adId.equals(token)){
+                if(0 < sb.length()){
+                    sb.append(",");
+                }
+                sb.append(token);
+            }
+        }
+
+        this.adList = sb.toString();
+    }
+
+    public Long getCaptionId() {
+        return captionId;
+    }
+
+    public void setCaptionId(Long captionId) {
+        this.captionId = captionId;
+    }
 }

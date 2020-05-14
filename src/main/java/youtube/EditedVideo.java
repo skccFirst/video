@@ -10,6 +10,7 @@ public class EditedVideo extends AbstractEvent {
     private Long clientId;
     private Long channelId;
     private int viewCount=0;
+    private Long captionId;
 
     // 강령현 추가
     private Long adId; // 광고 ID
@@ -64,5 +65,13 @@ public class EditedVideo extends AbstractEvent {
 
     public void setAdId(Long adId) {
         this.adId = adId;
+    }
+
+    public Long getCaptionId() {
+        return captionId;
+    }
+
+    public void setCaptionId(Long captionId) {
+        this.captionId = captionId;
     }
 }
