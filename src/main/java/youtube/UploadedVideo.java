@@ -10,6 +10,9 @@ public class UploadedVideo extends AbstractEvent {
     private Long channelId;
     private int viewCount=0;
 
+    // 강령현 추가
+    private Long adId; // 광고 ID
+
     public UploadedVideo(){
         super();
     }
@@ -52,5 +55,13 @@ public class UploadedVideo extends AbstractEvent {
 
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public Long getAdId() {
+        return adId;
+    }
+
+    public void setAdId(Long adId) {
+        this.adId = adId;
     }
 }
